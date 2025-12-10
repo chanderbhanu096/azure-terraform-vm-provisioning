@@ -1,0 +1,10 @@
+#cloud-config
+packages:
+package_update: true
+package_upgrade: true
+
+runcmd:
+ - [bash, -c, 'echo "hello from cloud-init, Chander" > /hello-from-cloud-init.txt']
+ - apt install -y curl
+ - apt install -y python3-pip
+
