@@ -1,0 +1,5 @@
+project-name   = "terraform-demo"
+location       = "westeurope"
+admin-username = "chander"
+vm-size        = "Standard_F2as_v6"
+vm-name        = "chander-vm-demo"

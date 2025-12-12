@@ -132,8 +132,3 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   custom_data = filebase64("${path.module}/cloud-init.yaml")
 }
-
-# 9. Output VM Public IP
-output "vm_public_ip" {
-  value = azurerm_public_ip.vm_public_ip.ip_address
-}
