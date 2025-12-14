@@ -12,3 +12,13 @@ output "datalake_dfs_endpoint" {
   description = "Endpoint of the storage account"
   value       = azurerm_storage_account.datalake.primary_dfs_endpoint
 }
+
+output "adf_name" {
+  description = "name of the data factory"
+  value       = azurerm_data_factory.adf.name
+}
+
+output "adf_id" {
+  description = "id of the data factory"
+  value       = azurerm_data_factory.adf.id
+}

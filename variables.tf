@@ -1,5 +1,5 @@
 variable "project-name" {
-  default     = "terraform_demo"
+  default     = "terraform-chander-demo"
   description = "Resource group name for all resources"
   type        = string
 }
@@ -30,4 +30,9 @@ variable "vm-name" {
 variable "storage-account-name" {
   description = "Name of the storage account"
   default     = "chanderdemostorage"
+}
+
+variable "datafactory-name" {
+  description = "Name of the data factory"
+  default     = "chanderdemodatafactory"
 }
