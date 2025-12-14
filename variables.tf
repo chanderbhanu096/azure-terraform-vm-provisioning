@@ -26,3 +26,8 @@ variable "vm-name" {
   default     = "chandervm"
   type        = string
 }
+
+variable "storage-account-name" {
+  description = "Name of the storage account"
+  default     = "chanderdemostorage"
+}
