@@ -13,19 +13,19 @@ provider "azurerm" {
 
 # 1. Resource Group
 resource "azurerm_resource_group" "rg" {
-  name     = "rg-${var.project-name}"
+  name     = "rg-${var.project_name}"
   location = var.location # or "northeurope" / "germanywestcentral"
 
   tags = {
     environment = "demo"
     owner       = "chander"
-    project     = var.project-name
+    project     = var.project_name
   }
 }
 
 # 2. Virtual Network
 resource "azurerm_virtual_network" "vnet" {
-  name                = "vnet-${var.project-name}"
+  name                = "vnet-${var.project_name}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   address_space       = ["11.0.0.0/16"]
@@ -33,7 +33,7 @@ resource "azurerm_virtual_network" "vnet" {
 
 # 3. Subnet  ✅ THIS MUST EXIST
 resource "azurerm_subnet" "subnet" {
-  name                 = "subnet-${var.admin-username}"
+  name                 = "subnet-${var.admin_username}"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["11.0.1.0/24"]
@@ -41,7 +41,7 @@ resource "azurerm_subnet" "subnet" {
 
 # 4. NSG
 resource "azurerm_network_security_group" "nsg" {
-  name                = "nsg-${var.project-name}"
+  name                = "nsg-${var.project_name}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -78,7 +78,7 @@ resource "azurerm_subnet_network_security_group_association" "subnet_nsg" {
 
 # 6. Public IP for VM
 resource "azurerm_public_ip" "vm_public_ip" {
-  name                = "vm-public-ip-${var.project-name}"
+  name                = "vm-public-ip-${var.project_name}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -88,7 +88,7 @@ resource "azurerm_public_ip" "vm_public_ip" {
 
 # 7. NIC for VM
 resource "azurerm_network_interface" "nic" {
-  name                = "nic-${var.project-name}"
+  name                = "nic-${var.project_name}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -102,19 +102,19 @@ resource "azurerm_network_interface" "nic" {
 
 # 8. Linux VM
 resource "azurerm_linux_virtual_machine" "vm" {
-  name                = var.vm-name
+  name                = var.vm_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  size                = var.vm-size # changed from B1s to avoid SKU issue
+  size                = var.vm_size # changed from B1s to avoid SKU issue
 
-  admin_username = var.admin-username
+  admin_username = var.admin_username
 
   network_interface_ids = [
     azurerm_network_interface.nic.id
   ]
 
   admin_ssh_key {
-    username   = var.admin-username
+    username   = var.admin_username
     public_key = file("${path.module}/id_rsa_terraform_demo.pub")
   }
 
