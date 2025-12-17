@@ -1,5 +1,5 @@
 resource "azurerm_data_factory_pipeline" "pipeline" {
-  name            = "pipeline-${var.project_name}"
+  name            = "pipeline_${local.adf_safe_project}"
   data_factory_id = azurerm_data_factory.adf.id
 
   parameters = {
@@ -13,25 +13,23 @@ resource "azurerm_data_factory_pipeline" "pipeline" {
       type = "Copy"
       typeProperties = {
         source = {
-          type = "HttpSource"
+          type          = "HttpSource"
+          requestMethod = "GET"
         }
-        sink = {
-          type = "BinarySink"
-        }
+        sink = { type = "BinarySink" }
       }
-
       inputs = [
         {
-          referenceName = "ds_https_dataset"
+          referenceName = azurerm_data_factory_dataset_http.ds_https_generic.name
           type          = "DatasetReference"
           parameters = {
-            sourceUrl = "@pipeline().parameters.source_url"
+            fileName = "@pipeline().parameters.source_url"
           }
         }
       ]
       outputs = [
         {
-          referenceName = "ds_bronze"
+          referenceName = azurerm_data_factory_dataset_binary.ds_bronze.name
           type          = "DatasetReference"
           parameters = {
             fileName = "@pipeline().parameters.out_file"
